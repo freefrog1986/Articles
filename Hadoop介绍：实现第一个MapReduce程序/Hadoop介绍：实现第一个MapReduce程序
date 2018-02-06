@@ -1,0 +1,23 @@
+# Hadoop介绍：实现第一个MapReduce程序for mac
+本文所有流程、代码均在mac 10.13.2系统版本下测试通过。
+
+## 1.下载并安装Cloudera VM和VirtualBox
+### 安装VirtualBox
+下载地址：https://www.virtualbox.org/wiki/Downloads
+
+也可以直接下载本文使用的版本 [VirtualBox 5.1 builds](https://www.virtualbox.org/wiki/Download_Old_Builds_5_1)
+
+### 2. 下载Cloudera VM
+Cloudera集成了hadoop生态环境中的大部分常用框架。
+点击下面的链接安装：https://downloads.cloudera.com/demo_vm/virtualbox/cloudera-quickstart-vm-5.4.2-0-virtualbox.zip.
+该程序大约4GB。下载后请解压
+
+### 3.导入程序
+打开VirtualBox，点击菜单栏File-> Import Appliance，然后点击文件夹图标
+![](https://d3c33hcgiwev3.cloudfront.net/imageAssetProxy.v1/bNTtS7uwEeWg-hLO0rEOAw_eb2795092d0372bf64ae180f04533737_folder-icon.png?expiry=1518048000000&hmac=HkAgB6HXx1DYrWGHcapYxogmPNV4cDo7Emx4JYyKR54)
+选择解压缩后的Cloudera文件‘cloudera-quickstart-vm-5.4.2-0-virtualbox.ovf’，然后一直点击继续。
+
+### 4. 启动Cloudera VM
+当导入程序完成后，点击绿色Start按钮：
+![](https://d3c33hcgiwev3.cloudfront.net/imageAssetProxy.v1/aEzil7uyEeWW3xLV17cwNw_6e4a71b586bd0e6dc35c6e09ce3d1b30_select-start.png?expiry=1518048000000&hmac=NO_QLnZd2p6EFhqiDz8c0mZAlKAGkoZ0l0oBZrPbGoo)
+
