@@ -7,20 +7,26 @@
 
 也可以直接下载本文使用的版本 [VirtualBox 5.1 builds](https://www.virtualbox.org/wiki/Download_Old_Builds_5_1)
 
-### 2. 下载Cloudera VM
+### 下载Cloudera VM
 Cloudera集成了hadoop生态环境中的大部分常用框架。
 点击下面的链接安装：https://downloads.cloudera.com/demo_vm/virtualbox/cloudera-quickstart-vm-5.4.2-0-virtualbox.zip.
 该程序大约4GB。下载后请解压
 
-### 3.导入程序
+### 导入程序
 打开VirtualBox，点击菜单栏File-> Import Appliance，然后点击文件夹图标
 ![](https://github.com/freefrog1986/Articles/blob/master/Hadoop%E4%BB%8B%E7%BB%8D%EF%BC%9A%E5%AE%9E%E7%8E%B0%E7%AC%AC%E4%B8%80%E4%B8%AAMapReduce%E7%A8%8B%E5%BA%8F/import.png?raw=true)
 选择解压缩后的Cloudera文件‘cloudera-quickstart-vm-5.4.2-0-virtualbox.ovf’，然后一直点击继续。
 
-### 4. 启动Cloudera VM
+### 启动Cloudera VM
 当导入程序完成后，点击绿色Start按钮：
 ![](https://github.com/freefrog1986/Articles/blob/master/Hadoop%E4%BB%8B%E7%BB%8D%EF%BC%9A%E5%AE%9E%E7%8E%B0%E7%AC%AC%E4%B8%80%E4%B8%AAMapReduce%E7%A8%8B%E5%BA%8F/start.png?raw=true)
+启动完成后进入桌面
+![](https://github.com/freefrog1986/Articles/blob/master/Hadoop%E4%BB%8B%E7%BB%8D%EF%BC%9A%E5%AE%9E%E7%8E%B0%E7%AC%AC%E4%B8%80%E4%B8%AAMapReduce%E7%A8%8B%E5%BA%8F/desktop.png?raw=true)
 
-### 5. 
+## 2. 复制文件到HDFS  
+打开浏览器，输入网址http://ocw.mit.edu/ans7870/6/6.006/s08/lecturenotes/files/t8.shakespeare.txt
+![]()
+![]()
+点击菜单按钮下的Save Page，将文件保存在Downloads文件夹，文件名为words.txt
 
 
