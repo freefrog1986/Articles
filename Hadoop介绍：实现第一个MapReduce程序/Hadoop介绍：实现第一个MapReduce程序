@@ -25,8 +25,33 @@ Cloudera集成了hadoop生态环境中的大部分常用框架。
 
 ## 2. 复制文件到HDFS  
 打开浏览器，输入网址http://ocw.mit.edu/ans7870/6/6.006/s08/lecturenotes/files/t8.shakespeare.txt
-![]()
-![]()
+![](https://github.com/freefrog1986/Articles/blob/master/Hadoop%E4%BB%8B%E7%BB%8D%EF%BC%9A%E5%AE%9E%E7%8E%B0%E7%AC%AC%E4%B8%80%E4%B8%AAMapReduce%E7%A8%8B%E5%BA%8F/menu.png?raw=true)
+![](https://github.com/freefrog1986/Articles/blob/master/Hadoop%E4%BB%8B%E7%BB%8D%EF%BC%9A%E5%AE%9E%E7%8E%B0%E7%AC%AC%E4%B8%80%E4%B8%AAMapReduce%E7%A8%8B%E5%BA%8F/save%20page.png?raw=true)
 点击菜单按钮下的Save Page，将文件保存在Downloads文件夹，文件名为words.txt
+
+### 打开terminal
+点击桌面菜单栏的黑色图标打开terminal
+![]()
+
+输入命令进入Downloads文件夹：`cd Downloads`
+输入ls确认'words.txt'文件存在：`ls`
+
+### 拷贝文件
+拷贝命令:`hadoop fs –copyFromLocal words.txt `
+确认文件拷贝成功：`hadoop fs –ls`
+
+### HDFS文件拷贝
+命令：`hadoop fs -cp words.txt words2.txt `
+查看：`hadoop fs -ls`
+
+### 拷贝文件到本地
+命令：`hadoop fs -copyToLocal words2.txt `
+查看：`ls`
+
+### 删除HDFS内的文件
+命令:`hadoop fs -rm words2.txt`
+查看：`hadoop fs -ls`
+
+## 3. 运行第一个Hadoop程序：WordCount
 
 
