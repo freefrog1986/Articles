@@ -31,7 +31,7 @@ Cloudera集成了hadoop生态环境中的大部分常用框架。
 
 ### 打开terminal
 点击桌面菜单栏的黑色图标打开terminal
-![]()
+![](https://github.com/freefrog1986/Articles/blob/master/Hadoop%E4%BB%8B%E7%BB%8D%EF%BC%9A%E5%AE%9E%E7%8E%B0%E7%AC%AC%E4%B8%80%E4%B8%AAMapReduce%E7%A8%8B%E5%BA%8F/terminal.png?raw=true)
 
 输入命令进入Downloads文件夹：`cd Downloads`
 输入ls确认'words.txt'文件存在：`ls`
@@ -53,5 +53,35 @@ Cloudera集成了hadoop生态环境中的大部分常用框架。
 查看：`hadoop fs -ls`
 
 ## 3. 运行第一个Hadoop程序：WordCount
+该程序实现的功能是计算文件中单词出现的次数。
+
+### 查看示例程序
+虚拟机中打开terminal，执行命令：`hadoop jar /usr/jars/hadoop-examples.jar`
+结果中列出了所有示例程序，其中包括我们要使用的wordcount程序
+
+### 查看程序参数
+执行命令：`hadoop jar /usr/jars/hadoop-examples.jar wordcount`
+结果列出了该程序的参数，可以有一个或多个输入，得到一个输出。
+
+### 执行程序
+运行：`hadoop jar /usr/jars/hadoop-examples.jar wordcount words.txt out`
+我们以之前下载的word.txt文件作为输入
+得到输出文件out
+等待map和reduce分别执行到100%即运行完成。
+
+### 查看结果
+运行：`hadoop fs –ls`
+我们发现HDFS中多了一个文件夹out
+进入文件件` hadoop –fs ls out`
+文件‘part-r-00000’包含了程序运行的结果
+我们首先将文件拷贝到本地`hadoop fs –copyToLocal out/part-r-00000 local.txt`
+运行以下命令查看结果：`more local.txt`
+
+![]()
+
+我们看到文件中记录了所有单词出现的次数！
+
+至此，第一个MapReduce程序运行完成。
+
 
 
