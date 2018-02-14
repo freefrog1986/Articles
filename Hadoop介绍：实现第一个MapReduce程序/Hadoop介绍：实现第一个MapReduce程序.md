@@ -77,7 +77,7 @@ Cloudera集成了hadoop生态环境中的大部分常用框架。
 我们首先将文件拷贝到本地`hadoop fs –copyToLocal out/part-r-00000 local.txt`
 运行以下命令查看结果：`more local.txt`
 
-![]()
+![](https://github.com/freefrog1986/Articles/blob/master/Hadoop%E4%BB%8B%E7%BB%8D%EF%BC%9A%E5%AE%9E%E7%8E%B0%E7%AC%AC%E4%B8%80%E4%B8%AAMapReduce%E7%A8%8B%E5%BA%8F/result.jpeg?raw=true)
 
 我们看到文件中记录了所有单词出现的次数！
 
