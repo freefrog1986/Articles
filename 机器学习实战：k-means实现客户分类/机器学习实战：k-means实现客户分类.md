@@ -34,7 +34,7 @@ display(data.describe())
 
 观察发现，一共有6个特征值，包括'Fresh', 'Milk', 'Grocery', 'Frozen', 'Detergents_Paper', 和 'Delicatessen'。分别代表'新鲜食物', '牛奶', '杂货', '冷冻食品', '洗涤剂和纸类产品', 和 '熟食'
 
-我们可以发现，前五个特征，尤其'Fresh'和'Grocery'变化范围较大，'Delicatessen'变化范围较小。我们可以得到直观的感受，很有可能不同的客户类别的前五个特征值差别较大。换句话说，我们很有可能主要使用前五个特征来进行客户分类。
+我们可以发现，前五个特征，尤其'Fresh'和'Grocery'变化范围较大，'Delicatessen'变化范围较小。我们还可以通过对数据均值的观察，选取一些样本数据进行分析。
 
 ### 选择一些样本数据
 为了更好的理解我们在分析过程中对数据做的一些转换，这里先采样一些样本数据用于观察。
@@ -45,8 +45,43 @@ samples = pd.DataFrame(data.loc[indices], columns = data.keys()).reset_index(dro
 print("从数据集中采样的数据包括:")
 display(samples)
 ```
+![](https://raw.githubusercontent.com/freefrog1986/Articles/master/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%EF%BC%9Ak-means%E5%AE%9E%E7%8E%B0%E5%AE%A2%E6%88%B7%E5%88%86%E7%B1%BB/samples.jpeg)
 
+这时候观察我们采样的数据，对比我们之前得到的统计数据，可以对客户分类进行一些简单分析，以第一行数据为例，我们发现“新鲜食物”和“冷藏食品”的采购量较大，其他类别的采购量较小（相对于统计的均值来说），所以该客户很可能是餐饮饭店。
 
+这里处于对原课程项目版权的尊重，只分析一个样本，读者可以按照我的思路分析其他的样本，或者推荐读者报名该课程进行学习。
+
+### 特征值相关性
+数据探索的另一个非常重要的步骤就是进行特征值相关性分析。
+相关性分析也就是探索特征值之间是否有较强的相关性。
+这里一个简单直接的方法就是，首先删除一个特征，然后使用其他数据训练一个学习器对该特征进行预测，然后对该学习器的效果进行打分来评估效果。
+当然，效果越好，说明删除的特征与其他特征之间的相关性越高。
+下面使用决策树作为学习器对特征Delicatessen进行预测。
+
+```python
+new_data = data.copy()
+new_data.drop(['Delicatessen'], axis = 1, inplace = True) # 删除特征值作为新的数据集
+
+from sklearn.cross_validation import train_test_split 
+X_train, X_test, y_train, y_test = train_test_split(new_data, data['Delicatessen'], test_size=0.25, random_state=42) # 将数据集划分为训练和测试集
+
+from sklearn.tree import DecisionTreeRegressor
+regressor = DecisionTreeRegressor(random_state=0) # 创建学习器
+regressor.fit(X_train, y_train) # 训练学习器
+
+score = regressor.score(X_test, y_test) # 得到效果得分
+print("决策树学习器得分：{}".format(score))
+```
+读者可以替换删除每个特征，观察哪些特征与其他特征之间的相关性较高。
+
+### 散布矩阵
+另一个比较直观的观察特征值之间相关性的方法是使用**散布矩阵（scatter_matrix）**。
+
+```python
+pd.scatter_matrix(data, alpha = 0.3, figsize = (14,8), diagonal = 'kde');
+```
+![]()
+相关性较强的特征
 
 
 
