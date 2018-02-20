@@ -80,8 +80,24 @@ print("决策树学习器得分：{}".format(score))
 ```python
 pd.scatter_matrix(data, alpha = 0.3, figsize = (14,8), diagonal = 'kde');
 ```
-![]()
-相关性较强的特征
+
+![](https://github.com/freefrog1986/Articles/blob/master/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%EF%BC%9Ak-means%E5%AE%9E%E7%8E%B0%E5%AE%A2%E6%88%B7%E5%88%86%E7%B1%BB/scatter-matrix.jpeg?raw=true)
+
+在图中能够看出某些特征具有较强的相关性，例如Milk和Grocery。
+
+至于散布矩阵的原理，可以看这篇[博文](http://blog.csdn.net/hurry0808/article/details/78573585?locationNum=7&fps=1).
+
+散布矩阵能以图形的形式“定性”给出各特征之间的关系，如要进一步“定量”分析，则需要使用相关系数。使用相关系数的一个简单的方法是使用seaborn库。
+
+```python
+import seaborn as sns
+ax = sns.heatmap(data.corr())
+```
+
+
+除了特征值间相关性之外，我们还能够看到每个特征的分布情况（对角线的图），很明显这些特征基本上都**正偏分布**，也就是说数据集中的一些比较极端的数据影响了分布。
+
+###
 
 
 
