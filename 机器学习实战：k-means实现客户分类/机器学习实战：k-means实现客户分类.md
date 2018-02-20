@@ -93,12 +93,29 @@ pd.scatter_matrix(data, alpha = 0.3, figsize = (14,8), diagonal = 'kde');
 import seaborn as sns
 ax = sns.heatmap(data.corr())
 ```
-
+![](https://github.com/freefrog1986/Articles/blob/master/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%EF%BC%9Ak-means%E5%AE%9E%E7%8E%B0%E5%AE%A2%E6%88%B7%E5%88%86%E7%B1%BB/seaborn-corr.jpeg?raw=true)
 
 除了特征值间相关性之外，我们还能够看到每个特征的分布情况（对角线的图），很明显这些特征基本上都**正偏分布**，也就是说数据集中的一些比较极端的数据影响了分布。
 
-###
+## 4. 数据处理
+### 特征缩放
+当数据不是正态分布时，尤其当均值和中位数变化较大时（一般导致较大的偏差），一般应用非线性缩放——尤其对于金融数据。具体的算法，可以采用[Box-Cox test](http://scipy.github.io/devdocs/generated/scipy.stats.boxcox.html)，简单来说该方法计算使偏差最小化的非线性转换方法。
 
+``` python
+from scipy import stats
+### 拷贝数据集
+data_copy = data.copy()
+samples_copy = samples.copy()
 
+### 应用boxcox变换
+for feature in data_copy:
+    data_copy[feature] = stats.boxcox(data_copy[feature])[0]
+    
+for feature in data:
+    samples_copy[feature] = stats.boxcox(samples_copy[feature])[0]
 
+# 画图
+pd.scatter_matrix(data_copy, alpha = 0.3, figsize = (14,8), diagonal = 'kde');
+```
+!
 

@@ -31,4 +31,19 @@ regressor.fit(X_train, y_train) # 训练学习器
 score = regressor.score(X_test, y_test) # 得到效果得分
 print("决策树学习器得分：{}".format(score))
 
-pd.scatter_matrix(data, alpha = 0.3, figsize = (14,8), diagonal = 'kde');
+pd.plotting.scatter_matrix(data, alpha = 0.3, figsize = (14,8), diagonal = 'kde')
+
+from scipy import stats
+### 拷贝数据集
+data_copy = data.copy()
+samples_copy = samples.copy()
+
+### 应用boxcox变换
+for feature in data_copy:
+    data_copy[feature] = stats.boxcox(data_copy[feature])[0]
+    
+for feature in data:
+    samples_copy[feature] = stats.boxcox(samples_copy[feature])[0]
+
+# 画图
+pd.plotting.scatter_matrix(data_copy, alpha = 0.3, figsize = (14,8), diagonal = 'kde');
