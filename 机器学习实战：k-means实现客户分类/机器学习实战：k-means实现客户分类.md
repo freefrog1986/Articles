@@ -30,8 +30,24 @@ print("Wholesale customers dataset has {} samples with {} features each.".format
 from IPython.display import display 
 display(data.describe())
 ```
-
+![](https://raw.githubusercontent.com/freefrog1986/Articles/master/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%EF%BC%9Ak-means%E5%AE%9E%E7%8E%B0%E5%AE%A2%E6%88%B7%E5%88%86%E7%B1%BB/statistical%20data.jpeg)
 
 观察发现，一共有6个特征值，包括'Fresh', 'Milk', 'Grocery', 'Frozen', 'Detergents_Paper', 和 'Delicatessen'。分别代表'新鲜食物', '牛奶', '杂货', '冷冻食品', '洗涤剂和纸类产品', 和 '熟食'
+
+我们可以发现，前五个特征，尤其'Fresh'和'Grocery'变化范围较大，'Delicatessen'变化范围较小。我们可以得到直观的感受，很有可能不同的客户类别的前五个特征值差别较大。换句话说，我们很有可能主要使用前五个特征来进行客户分类。
+
+### 选择一些样本数据
+为了更好的理解我们在分析过程中对数据做的一些转换，这里先采样一些样本数据用于观察。
+
+``` python
+indices = [3, 141, 340] # 样本的索引
+samples = pd.DataFrame(data.loc[indices], columns = data.keys()).reset_index(drop = True) # 创建samples保存样本数据
+print("从数据集中采样的数据包括:")
+display(samples)
+```
+
+
+
+
 
 
