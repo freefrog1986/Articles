@@ -169,4 +169,21 @@ pca_samples = pca.transform(log_samples) #对样本数据应用pca
 
 pca_results = vs.pca_results(good_data, pca) #展示结果
 ```
+![](https://github.com/freefrog1986/Articles/blob/master/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%EF%BC%9Ak-means%E5%AE%9E%E7%8E%B0%E5%AE%A2%E6%88%B7%E5%88%86%E7%B1%BB/pca.jpeg?raw=true)
+
+图中得到了6个成分的对应的特征权重值和**方差解释**。   
+我们以第一个成分和第三个成分为例说明。第一个成分的方差解释是0.8722，也就是说该成分能够解释87.22%的数据，如何解释？通过权重组合各特征值。我们看到，fresh特征有非常大的正权重，其他特征值的权重较小，所以第一个成分通过组合较多的fresh特征和较少的其他特征就可以解释87.22%的数据。换句话说我们可以将原来的6维特征数据降为1维特征数据，依然能够对原数据的87.22%进行解释。   
+再来看第三个成分，该成分的grocery和detergens_paper具有较大的正权重，frozen和delicatessen具有较大的负权重。这两部分的组合主要解释了第三个成分。该成分代表负权重部分特征的减少和正权重部分特征的增加。
+
+一般来说前几个主成分既可以解释数据集的90%以上，这样就达到了降维的目的。
+
+我们再观察采样数据。
+
+```python
+display(pd.DataFrame(np.round(pca_samples, 4), columns = pca_results.index.values))
+```
+
+![]()
+
+
 
