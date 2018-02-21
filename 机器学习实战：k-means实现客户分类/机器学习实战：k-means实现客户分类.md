@@ -110,12 +110,63 @@ samples_copy = samples.copy()
 ### 应用boxcox变换
 for feature in data_copy:
     data_copy[feature] = stats.boxcox(data_copy[feature])[0]
-    
+log_data = data_copy
+  
 for feature in data:
     samples_copy[feature] = stats.boxcox(samples_copy[feature])[0]
+log_samples = samples_copy
 
 # 画图
 pd.scatter_matrix(data_copy, alpha = 0.3, figsize = (14,8), diagonal = 'kde');
 ```
-!
+
+![](https://github.com/freefrog1986/Articles/blob/master/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%EF%BC%9Ak-means%E5%AE%9E%E7%8E%B0%E5%AE%A2%E6%88%B7%E5%88%86%E7%B1%BB/boxcox%E5%8F%98%E6%8D%A2.jpeg?raw=true)
+
+经过变换后的数据接近正态分布，特征之间的相关性也更加明显了。   
+这时候我们可以再来观察一下样本数据。
+
+``` python
+display(log_samples)
+```
+我们发现数据值已经发生了变化，最明显的变化是都变小了，因为之前的特征都是正偏差。
+
+### 异常值处理
+完成了数据缩放，还要异常值处理。为什么要进行异常值处理，因为异常值是引起数据分布产生偏差的重要原因。
+第一个问题是，如何检测异常值？这里我们使用的方法是[Tukey's Method](http://datapigtechnologies.com/blog/index.php/highlighting-outliers-in-your-data-with-the-tukey-method/)，简单来说就是首先计算**异常值步进**，即1.5倍的四分位数范围（ interquartile range，也叫做IQR）。然后将所有IQR外超过异常值步进的数据定义为异常值。
+
+```python
+for feature in log_data.keys():
+    Q1 = np.percentile(log_data[feature], 25)
+    Q3 = np.percentile(log_data[feature], 75)
+    step = 1.5 * (Q3 - Q1)
+
+    print("特征'{}'的异常值包括:".format(feature))
+    display(log_data[~((log_data[feature] >= Q1 - step) & (log_data[feature] <= Q3 + step))])
+    
+outliers  = [95, 338, 86, 75, 161, 183, 154] # 选择需要删除的异常值
+
+good_data = log_data.drop(log_data.index[outliers]).reset_index(drop = True) #删除选择的异常值
+```
+
+这里我们选择并删除了一些异常值，遵循以下原则：
+
+1. 不符合前面观察到的特征之间相关性趋势的点。
+2. 一些极大或者极小值点。
+
+如何选择是否删除一些异常值？还是保留？可以参考[这篇文章](http://www.theanalysisfactor.com/outliers-to-drop-or-not-to-drop/)。
+
+## 5. 特征转换
+### 应用PCA
+PCA也就是主成分分析（principle component analysis），用于降维。简单来说就是通过计算得到一定数量的成分（component），每个成分能够解释一定比例的数据。 
+来看看对我们的数据应用PCA得到什么。
+
+```python
+from sklearn.decomposition import PCA
+pca = PCA(n_components=6) # 创建PCA
+pca.fit(good_data) # 训练pca
+
+pca_samples = pca.transform(log_samples) #对样本数据应用pca
+
+pca_results = vs.pca_results(good_data, pca) #展示结果
+```
 
