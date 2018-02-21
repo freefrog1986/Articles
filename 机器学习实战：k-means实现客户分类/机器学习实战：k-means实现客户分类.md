@@ -1,8 +1,6 @@
 # 机器学习实战：k-means实现客户分类
 本文内容主要参考优达学城[”机器学习（进阶）“纳米学位](https://cn.udacity.com/course/machine-learning-engineer-nanodegree--nd009-cn-advanced)的课程项目。
 文章福利：使用优惠码027C001B减免300元优达学城课程学费。
-完整代码下载地址[freefrog‘s github](https://github.com/freefrog1986/Articles)。
-本文所有代码在`Python 2.7.14`下测试通过。
 
 ## 1. 背景介绍
 在本文中，笔者将带领大家对客户的年均消费数据进行分析。该数据来自于分销商，也就是说，分销商将不同类别的商品卖给不同的客户，商品包括新鲜食品、牛奶、杂货等等，客户有可能是饭店、咖啡馆、便利店、大型超市等等。
@@ -183,7 +181,53 @@ pca_results = vs.pca_results(good_data, pca) #展示结果
 display(pd.DataFrame(np.round(pca_samples, 4), columns = pca_results.index.values))
 ```
 
-![]()
+![](https://github.com/freefrog1986/Articles/blob/master/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%EF%BC%9Ak-means%E5%AE%9E%E7%8E%B0%E5%AE%A2%E6%88%B7%E5%88%86%E7%B1%BB/pca-samples.jpeg?raw=true)
 
+首先，采样数据原来的6个特征已经被新的特征（成分）取代了，新的成分代表原特征的某种组合。
 
+现在我们可以将PCA应用到数据集中，将原来的6维数据降维2维。
+
+```python
+pca = PCA(n_components=2)
+pca.fit(good_data)# 训练pca
+
+reduced_data = pca.transform(good_data) #转换数据
+
+pca_samples = pca.transform(log_samples) #转换采样数据
+
+reduced_data = pd.DataFrame(reduced_data, columns = ['Dimension 1', 'Dimension 2'])# 使用2维主成分代替原特征
+```
+
+## 6. 聚类
+经过前面的一系列转换，数据已经准备好用来聚类，这里我们选择使用k-means算法进行聚类。
+
+k-means算法的好处是简单快捷，而且只需要调整一个主要参数，那就是簇的数量，如何确定簇的数量呢？
+
+一个方法是，计算每一个数据的轮廓系数（silhouette coefficient），该系数是聚类是否合理、有效的度量。轮廓系数的取值范围是[-1,1],-1代表完全不相似，1代表完全相似。所以越接近1，代表该数据的聚类效果越好。
+
+也就是说，我们可以尝试不同的簇的数量，然后计算轮廓系数，选择轮廓系数好的簇的数量作为k-means算法的参数。
+
+这里我们给出簇的数量是2时，如何计算轮廓系数
+
+```python
+from sklearn.cluster import KMeans
+from sklearn import metrics
+clusterer = KMeans(n_clusters=2, random_state=0).fit(reduced_data)# kmeans算法
+
+preds = clusterer.predict(reduced_data)
+# 得到预测结果
+
+centers = clusterer.cluster_centers_
+# 得到簇中心位置
+
+sample_preds = clusterer.predict(pca_samples)
+# 采样数据的预测结果
+
+score = metrics.silhouette_score(reduced_data, preds, metric='euclidean')# 计算轮廓系数的均值
+print(score)
+```
+读者可以尝试使用不同的簇的数量，判断簇的数量是多少时数据的分类效果最好。
+
+### 分类效果可视化
+最后，我们可以将对客户的分类可视化
 
